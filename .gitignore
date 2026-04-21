@@ -1,0 +1,11 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+*.log
+coverage/
+tmp/
+.cache/
+.codex
+AGENTS.md
+RTK.md
