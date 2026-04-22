@@ -9,6 +9,7 @@ tmp/
 .codex
 AGENTS.md
 RTK.md
+TODO.md
 
 node_modules/
 dist/

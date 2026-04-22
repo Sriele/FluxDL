@@ -2,37 +2,128 @@ import { useMemo, useState } from "react";
 
 import { AppShell } from "./components/AppShell";
 import { MainPage } from "./pages/MainPage";
-import { SettingsPage } from "./pages/SettingsPage";
 import type { AppRoute, NavigationItem } from "./types";
 
 const routeTitles: Record<AppRoute, string> = {
-  main: "Main",
-  settings: "Settings",
+  overview: "Overview",
+  downloading: "Downloading",
+  downloadStorage: "Storage",
+  bookmark: "Bookmark",
+  live: "Live",
+  social: "Social",
+  notifications: "Notifications",
+  streamingStorage: "Storage",
 };
 
-function MainIcon() {
+const routeSections: Record<AppRoute, string> = {
+  overview: "Download",
+  downloading: "Download",
+  downloadStorage: "Download",
+  bookmark: "Download",
+  live: "Streaming",
+  social: "Streaming",
+  notifications: "Streaming",
+  streamingStorage: "Streaming",
+};
+
+function OverviewIcon() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M4 5.5A1.5 1.5 0 0 1 5.5 4h5A1.5 1.5 0 0 1 12 5.5v5a1.5 1.5 0 0 1-1.5 1.5h-5A1.5 1.5 0 0 1 4 10.5v-5Zm8 8A1.5 1.5 0 0 1 13.5 12h5a1.5 1.5 0 0 1 1.5 1.5v5a1.5 1.5 0 0 1-1.5 1.5h-5a1.5 1.5 0 0 1-1.5-1.5v-5ZM4 15a3 3 0 1 1 6 0 3 3 0 0 1-6 0Zm11-8a3 3 0 1 1 6 0 3 3 0 0 1-6 0Z" />
+      <path d="M4 5h7v7H4V5Z" />
+      <path d="M13 5h7v4h-7V5Z" />
+      <path d="M13 11h7v8h-7v-8Z" />
+      <path d="M4 14h7v5H4v-5Z" />
     </svg>
   );
 }
 
-function SettingsIcon() {
+function DownloadingIcon() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M10.8 3h2.4l.46 2.28c.48.15.94.34 1.37.57l1.94-1.29 1.7 1.7-1.29 1.94c.23.43.42.89.57 1.37L20.23 10v2.4l-2.28.46c-.15.48-.34.94-.57 1.37l1.29 1.94-1.7 1.7-1.94-1.29c-.43.23-.89.42-1.37.57L13.2 19.4h-2.4l-.46-2.25a7.08 7.08 0 0 1-1.39-.58l-1.92 1.28-1.7-1.7 1.28-1.92a7.08 7.08 0 0 1-.58-1.39L3.78 12.4V10l2.25-.45c.15-.49.34-.95.58-1.39L5.33 6.24l1.7-1.7 1.92 1.28c.44-.24.9-.43 1.39-.58L10.8 3Zm1.2 5.25a3.95 3.95 0 1 0 0 7.9 3.95 3.95 0 0 0 0-7.9Z" />
+      <path d="M12 4v10" />
+      <path d="m8 10 4 4 4-4" />
+      <path d="M5 18h14" />
+    </svg>
+  );
+}
+
+function StorageIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M5 6c0-1.1 3.1-2 7-2s7 .9 7 2-3.1 2-7 2-7-.9-7-2Z" />
+      <path d="M5 6v6c0 1.1 3.1 2 7 2s7-.9 7-2V6" />
+      <path d="M5 12v6c0 1.1 3.1 2 7 2s7-.9 7-2v-6" />
+    </svg>
+  );
+}
+
+function BookmarkIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M7 5h10v15l-5-3-5 3V5Z" />
+    </svg>
+  );
+}
+
+function LiveIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M8 7h8a4 4 0 0 1 4 4v2a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4v-2a4 4 0 0 1 4-4Z" />
+      <path d="m10 10 5 2-5 2v-4Z" />
+    </svg>
+  );
+}
+
+function SocialIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+      <path d="M16 10a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+      <path d="M3.5 19a4.5 4.5 0 0 1 9 0" />
+      <path d="M13 18a4 4 0 0 1 7.5-2" />
+    </svg>
+  );
+}
+
+function NotificationsIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M6 17h12l-1.5-2v-4.5a4.5 4.5 0 0 0-9 0V15L6 17Z" />
+      <path d="M10 19a2 2 0 0 0 4 0" />
     </svg>
   );
 }
 
 export default function App() {
-  const [activeRoute, setActiveRoute] = useState<AppRoute>("main");
+  const [activeRoute, setActiveRoute] = useState<AppRoute>("overview");
 
   const navigationItems = useMemo<NavigationItem[]>(
     () => [
-      { id: "main", label: "Main", icon: <MainIcon /> },
-      { id: "settings", label: "Settings", icon: <SettingsIcon /> },
+      { id: "overview", label: "Overview", icon: <OverviewIcon /> },
+      { id: "downloading", label: "Downloading", icon: <DownloadingIcon /> },
+      { id: "downloadStorage", label: "Storage", icon: <StorageIcon /> },
+      { id: "bookmark", label: "Bookmark", icon: <BookmarkIcon /> },
+      {
+        id: "live",
+        label: "Live",
+        icon: <LiveIcon />,
+        separatorBefore: true,
+      },
+      {
+        id: "social",
+        label: "Social",
+        icon: <SocialIcon />,
+      },
+      {
+        id: "notifications",
+        label: "Notifications",
+        icon: <NotificationsIcon />,
+      },
+      {
+        id: "streamingStorage",
+        label: "Storage",
+        icon: <StorageIcon />,
+      },
     ],
     [],
   );
@@ -44,11 +135,17 @@ export default function App() {
       onNavigate={setActiveRoute}
     >
       <div className="page-heading">
-        <p className="eyebrow">FluxDL</p>
-        <h1>{routeTitles[activeRoute]}</h1>
+        <nav className="page-path" aria-label="Current path">
+          <span>{routeSections[activeRoute]}</span>
+          <span aria-hidden="true">/</span>
+          <span className="page-path-current">{routeTitles[activeRoute]}</span>
+        </nav>
+        <div className="page-title-row">
+          <h1>{routeTitles[activeRoute]}</h1>
+        </div>
       </div>
 
-      {activeRoute === "main" ? <MainPage /> : <SettingsPage />}
+      <MainPage />
     </AppShell>
   );
 }
