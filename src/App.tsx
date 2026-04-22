@@ -1,6 +1,7 @@
-import { useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 
 import { AppShell } from "./components/AppShell";
+import { DownloadingPage } from "./pages/DownloadingPage";
 import { MainPage } from "./pages/MainPage";
 import type { AppRoute, NavigationItem } from "./types";
 
@@ -96,6 +97,25 @@ function NotificationsIcon() {
 
 export default function App() {
   const [activeRoute, setActiveRoute] = useState<AppRoute>("overview");
+  const [downloadPathSegments, setDownloadPathSegments] = useState<string[]>([]);
+  const currentPage =
+    activeRoute === "downloading" ? (
+      <DownloadingPage onPathChange={setDownloadPathSegments} />
+    ) : (
+      <MainPage />
+    );
+  const pagePathSegments =
+    activeRoute === "downloading"
+      ? [routeTitles[activeRoute], ...downloadPathSegments]
+      : [routeTitles[activeRoute]];
+
+  function handleNavigate(route: AppRoute) {
+    setActiveRoute(route);
+
+    if (route !== "downloading") {
+      setDownloadPathSegments([]);
+    }
+  }
 
   const navigationItems = useMemo<NavigationItem[]>(
     () => [
@@ -132,20 +152,32 @@ export default function App() {
     <AppShell
       activeRoute={activeRoute}
       navigationItems={navigationItems}
-      onNavigate={setActiveRoute}
+      onNavigate={handleNavigate}
     >
       <div className="page-heading">
         <nav className="page-path" aria-label="Current path">
           <span>{routeSections[activeRoute]}</span>
-          <span aria-hidden="true">/</span>
-          <span className="page-path-current">{routeTitles[activeRoute]}</span>
+          {pagePathSegments.map((segment, index) => (
+            <Fragment key={`${segment}-${index}`}>
+              <span aria-hidden="true">/</span>
+              <span
+                className={
+                  index === pagePathSegments.length - 1
+                    ? "page-path-current"
+                    : undefined
+                }
+              >
+                {segment}
+              </span>
+            </Fragment>
+          ))}
         </nav>
         <div className="page-title-row">
           <h1>{routeTitles[activeRoute]}</h1>
         </div>
       </div>
 
-      <MainPage />
+      {currentPage}
     </AppShell>
   );
 }

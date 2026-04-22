@@ -29,3 +29,19 @@ export interface AppInfo {
   name: string;
   version: string;
 }
+
+export type DownloadStatus = "active" | "paused" | "stopped";
+
+export type DownloadKind = "single" | "multiScan";
+
+export interface DownloadListItem {
+  id: string;
+  name: string;
+  kind: DownloadKind;
+  status: DownloadStatus;
+  progress: number;
+  speedLabel: string;
+  sizeLabel: string;
+  etaLabel: string;
+  sourceCount?: number;
+}
