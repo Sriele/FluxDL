@@ -46,6 +46,45 @@ export interface DownloadListItem {
   sourceCount?: number;
 }
 
+export type BookmarkStatus = "ready" | "watched" | "issue";
+
+export type BookmarkActivityKind = "download" | "scan" | "search" | "favorite";
+
+export type BookmarkCoverTone =
+  | "media"
+  | "mirror"
+  | "dataset"
+  | "course"
+  | "photo"
+  | "docs";
+
+export interface BookmarkActivity {
+  id: string;
+  kind: BookmarkActivityKind;
+  title: string;
+  sourceLabel: string;
+  dateLabel: string;
+  resultLabel: string;
+}
+
+export interface BookmarkItem {
+  id: string;
+  siteName: string;
+  siteUrl: string;
+  domain: string;
+  logoLabel: string;
+  coverTone: BookmarkCoverTone;
+  status: BookmarkStatus;
+  tags: string[];
+  downloadedCount: number;
+  scanCount: number;
+  lastActivityLabel: string;
+  lastDownloadTitle?: string;
+  lastScanQuery?: string;
+  notes?: string;
+  activities: BookmarkActivity[];
+}
+
 export type StorageDownloadKind = "mono" | "multiple";
 
 export type ArchiveState = "none" | "zip" | "extracted";

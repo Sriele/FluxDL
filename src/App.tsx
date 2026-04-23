@@ -1,6 +1,7 @@
 import { Fragment, useMemo, useState } from "react";
 
 import { AppShell } from "./components/AppShell";
+import { BookmarkPage } from "./pages/BookmarkPage";
 import { DownloadingPage } from "./pages/DownloadingPage";
 import { DownloadStoragePage } from "./pages/DownloadStoragePage";
 import { MainPage } from "./pages/MainPage";
@@ -106,6 +107,10 @@ export default function App() {
 
     if (activeRoute === "downloadStorage") {
       return <DownloadStoragePage />;
+    }
+
+    if (activeRoute === "bookmark") {
+      return <BookmarkPage />;
     }
 
     return <MainPage />;
