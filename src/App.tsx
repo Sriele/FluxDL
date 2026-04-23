@@ -2,6 +2,7 @@ import { Fragment, useMemo, useState } from "react";
 
 import { AppShell } from "./components/AppShell";
 import { DownloadingPage } from "./pages/DownloadingPage";
+import { DownloadStoragePage } from "./pages/DownloadStoragePage";
 import { MainPage } from "./pages/MainPage";
 import type { AppRoute, NavigationItem } from "./types";
 
@@ -98,12 +99,17 @@ function NotificationsIcon() {
 export default function App() {
   const [activeRoute, setActiveRoute] = useState<AppRoute>("overview");
   const [downloadPathSegments, setDownloadPathSegments] = useState<string[]>([]);
-  const currentPage =
-    activeRoute === "downloading" ? (
-      <DownloadingPage onPathChange={setDownloadPathSegments} />
-    ) : (
-      <MainPage />
-    );
+  const currentPage = (() => {
+    if (activeRoute === "downloading") {
+      return <DownloadingPage onPathChange={setDownloadPathSegments} />;
+    }
+
+    if (activeRoute === "downloadStorage") {
+      return <DownloadStoragePage />;
+    }
+
+    return <MainPage />;
+  })();
   const pagePathSegments =
     activeRoute === "downloading"
       ? [routeTitles[activeRoute], ...downloadPathSegments]

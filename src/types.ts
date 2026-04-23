@@ -45,3 +45,44 @@ export interface DownloadListItem {
   etaLabel: string;
   sourceCount?: number;
 }
+
+export type StorageDownloadKind = "mono" | "multiple";
+
+export type ArchiveState = "none" | "zip" | "extracted";
+
+export type StorageItemStatus = "ready" | "missing" | "issue";
+
+export type StorageFileType = "folder" | "zip" | "video" | "image" | "document";
+
+export interface StorageDownloadChild {
+  id: string;
+  name: string;
+  relativePath: string;
+  fileType: StorageFileType;
+  status: StorageItemStatus;
+  sizeLabel: string;
+}
+
+export interface StorageDownloadItem {
+  id: string;
+  name: string;
+  kind: StorageDownloadKind;
+  fileType: StorageFileType;
+  path: string;
+  folder: string;
+  sizeLabel: string;
+  fileCount: number;
+  archiveState: ArchiveState;
+  downloadedAtLabel: string;
+  lastModifiedLabel: string;
+  status: StorageItemStatus;
+  children?: StorageDownloadChild[];
+}
+
+export interface StorageItemInfo {
+  path: string;
+  name: string;
+  exists: boolean;
+  is_directory: boolean;
+  size_bytes: number;
+}
