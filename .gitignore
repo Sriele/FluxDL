@@ -9,3 +9,9 @@ tmp/
 .codex
 AGENTS.md
 RTK.md
+TODO.md
+
+node_modules/
+dist/
+src-tauri/target/
+src-tauri/gen/
