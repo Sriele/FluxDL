@@ -624,6 +624,196 @@ h2 {
   gap: 18px;
 }
 
+.overview-page {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+.overview-card {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+  min-height: 330px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 3%),
+    0 18px 42px rgb(0 0 0 / 14%);
+}
+
+.overview-card[data-accent="download"] {
+  border-color: rgb(71 214 203 / 22%);
+}
+
+.overview-card[data-accent="storage"] {
+  border-color: rgb(246 166 91 / 22%);
+}
+
+.overview-card[data-accent="bookmark"] {
+  border-color: rgb(175 132 255 / 22%);
+}
+
+.overview-card-heading {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.overview-card-heading h2 {
+  margin-top: 3px;
+  overflow: hidden;
+  font-size: 22px;
+  line-height: 1.15;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.overview-card-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgb(71 214 203 / 20%);
+  border-radius: 8px;
+  background: rgb(71 214 203 / 8%);
+  color: var(--accent);
+}
+
+.overview-card[data-accent="storage"] .overview-card-icon {
+  border-color: rgb(246 166 91 / 20%);
+  background: rgb(246 166 91 / 9%);
+  color: var(--warning);
+}
+
+.overview-card[data-accent="bookmark"] .overview-card-icon {
+  border-color: rgb(175 132 255 / 22%);
+  background: rgb(175 132 255 / 10%);
+  color: #bda4ff;
+}
+
+.overview-card-icon svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.overview-main-metric {
+  display: grid;
+  gap: 5px;
+  min-height: 86px;
+  padding: 14px;
+  border: 1px solid rgb(255 255 255 / 5%);
+  border-radius: 8px;
+  background: #1b1f2b;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.overview-main-metric strong {
+  color: var(--accent);
+  font-size: 34px;
+  line-height: 1;
+}
+
+.overview-card[data-accent="bookmark"] .overview-main-metric strong {
+  color: #bda4ff;
+}
+
+.overview-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.overview-metric-grid div,
+.overview-storage-balance div {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  min-height: 56px;
+  padding: 10px;
+  border-radius: 7px;
+  background: #1b1f2b;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.overview-metric-grid strong,
+.overview-storage-balance strong {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--text);
+  font-size: 16px;
+  text-overflow: ellipsis;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+.overview-storage-balance {
+  display: grid;
+  gap: 8px;
+}
+
+.overview-storage-balance div:first-child strong {
+  color: var(--warning);
+  font-size: 22px;
+}
+
+.overview-storage-balance div:last-child strong {
+  color: var(--text);
+  font-size: 22px;
+}
+
+.overview-meter {
+  height: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #171a24;
+}
+
+.overview-meter span {
+  display: block;
+  max-width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--warning), var(--accent-strong));
+}
+
+.overview-inline-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 38px;
+  margin-top: auto;
+  padding: 0 11px;
+  border: 1px solid rgb(255 255 255 / 5%);
+  border-radius: 7px;
+  background: rgb(255 255 255 / 3%);
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.overview-inline-status strong {
+  color: var(--danger);
+  font-size: 14px;
+}
+
 .download-overview-page,
 .download-detail-page,
 .downloading-page {
@@ -2903,6 +3093,7 @@ h2 {
 
   .page-grid,
   .settings-layout,
+  .overview-page,
   .download-main-grid,
   .download-overview-grid,
   .bookmark-board-toolbar,

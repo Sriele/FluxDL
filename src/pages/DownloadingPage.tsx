@@ -2,18 +2,18 @@ import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
 
 import type { DownloadListItem, DownloadStatus } from "../types";
 
-type DownloadingMode = "mono" | "multiple" | "scanner";
+export type DownloadingMode = "mono" | "multiple" | "scanner";
 
 type ChildItemStatus = "success" | "active" | "paused" | "failed";
 
-interface ChildDownloadItem {
+export interface ChildDownloadItem {
   id: string;
   name: string;
   status: ChildItemStatus;
   sizeLabel: string;
 }
 
-interface MultipleDownloadItem {
+export interface MultipleDownloadItem {
   id: string;
   name: string;
   status: "active" | "paused" | "failed";
@@ -28,7 +28,7 @@ interface MultipleDownloadItem {
   children: ChildDownloadItem[];
 }
 
-interface ScannerItem {
+export interface ScannerItem {
   id: string;
   name: string;
   sourceUrl: string;
@@ -52,7 +52,7 @@ const modePathLabels: Record<DownloadingMode, string> = {
   scanner: "Scanner",
 };
 
-const monoDownloads: DownloadListItem[] = [
+export const monoDownloads: DownloadListItem[] = [
   {
     id: "wow-wrath",
     name: "WoW: Wrath Of The Lich King",
@@ -125,7 +125,7 @@ const monoDownloads: DownloadListItem[] = [
   },
 ];
 
-const multipleDownloads: MultipleDownloadItem[] = [
+export const multipleDownloads: MultipleDownloadItem[] = [
   {
     id: "harry-potter",
     name: "Harry Potter Collection",
@@ -218,7 +218,7 @@ const multipleDownloads: MultipleDownloadItem[] = [
   },
 ];
 
-const scannerItems: ScannerItem[] = [
+export const scannerItems: ScannerItem[] = [
   {
     id: "archive-page",
     name: "Course archive page scan",

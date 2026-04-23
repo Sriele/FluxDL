@@ -8,7 +8,7 @@ import type {
 
 type BookmarkFilter = "all" | "downloaded" | "scanned" | "favorites" | "issues";
 
-const bookmarkItems: BookmarkItem[] = [
+export const bookmarkItems: BookmarkItem[] = [
   {
     id: "open-media-index",
     siteName: "Open Media Index",

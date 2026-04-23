@@ -19,7 +19,7 @@ import type {
 type StorageFilter = "all" | "mono" | "multiple" | "zip" | "extracted" | "issues";
 type StorageSort = "name" | "size" | "modified";
 
-const initialStorageItems: StorageDownloadItem[] = [
+export const initialStorageItems: StorageDownloadItem[] = [
   {
     id: "wow-wrath-storage",
     name: "WoW: Wrath Of The Lich King",
@@ -348,7 +348,7 @@ function fileTypeLabel(type: StorageFileType) {
   return "Document";
 }
 
-function parseSize(sizeLabel: string) {
+export function parseStorageSize(sizeLabel: string) {
   const value = Number.parseFloat(sizeLabel);
   if (!Number.isFinite(value)) {
     return 0;
@@ -427,7 +427,7 @@ export function DownloadStoragePage() {
       .filter((item) => itemMatchesFilter(item, filter))
       .sort((left, right) => {
         if (sort === "size") {
-          return parseSize(right.sizeLabel) - parseSize(left.sizeLabel);
+          return parseStorageSize(right.sizeLabel) - parseStorageSize(left.sizeLabel);
         }
 
         if (sort === "modified") {
@@ -444,7 +444,7 @@ export function DownloadStoragePage() {
   const multipleCount = items.filter((item) => item.kind === "multiple").length;
   const zipCount = items.filter((item) => item.archiveState === "zip").length;
   const issueCount = items.filter((item) => itemMatchesFilter(item, "issues")).length;
-  const totalSize = `${items.reduce((total, item) => total + parseSize(item.sizeLabel), 0).toFixed(1)} Gb`;
+  const totalSize = `${items.reduce((total, item) => total + parseStorageSize(item.sizeLabel), 0).toFixed(1)} Gb`;
 
   function selectItem(item: StorageDownloadItem) {
     setSelectedId(item.id);
